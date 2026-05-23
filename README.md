@@ -1,6 +1,6 @@
 # HAN Lab Kernel Mafia MLSys2026 Flashinfer Constest Release
 
-This repository releases the prompts, workflow documentation, and a minimal verification example for our MLSys 2026 FlashInfer Full-Agent track effort. The submitted kernels were produced by a fully agent-driven optimization workflow with [Humanize](https://github.com/PolyArch/humanize) (the best harness framework), [Our Collected KernelWiki](https://github.com/DongyunZou/KernelWiki/tree/master), and [Nsight Compute Profile Skills](https://github.com/DongyunZou/ncu-report-skill).
+This repository releases the prompts, workflow documentation, and a minimal verification example for our MLSys 2026 FlashInfer Full-Agent track effort. The submitted kernels were produced by a fully agent-driven optimization workflow with [KDA (Kernel Develop Agents)](mit-han-lab/kernel-design-agents). The core methods are [Humanize](https://github.com/PolyArch/humanize) (the best harness framework), [Our Collected KernelWiki](https://github.com/DongyunZou/KernelWiki/tree/master), and [Nsight Compute Profile Skills](https://github.com/DongyunZou/ncu-report-skill).
 
 * Team: HAN Lab Kernel Mafia
 * Technical report: [docs/HAN_Lab_Kernel_Mafia_Technical_Report](docs/HAN_Lab_Kernel_Mafia_Technical_Report.pdf)
