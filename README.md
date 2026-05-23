@@ -3,7 +3,7 @@
 This repository releases the prompts, workflow documentation, and a minimal verification example for our MLSys 2026 FlashInfer Full-Agent track effort. The submitted kernels were produced by a fully agent-driven optimization workflow with [KDA (Kernel Develop Agents)](mit-han-lab/kernel-design-agents). The core methods are [Humanize](https://github.com/PolyArch/humanize) (the best harness framework), [Our Collected KernelWiki](https://github.com/DongyunZou/KernelWiki/tree/master), and [Nsight Compute Profile Skills](https://github.com/DongyunZou/ncu-report-skill).
 
 * Team: HAN Lab Kernel Mafia
-* Technical report: [docs/HAN_Lab_Kernel_Mafia_Technical_Report](docs/HAN_Lab_Kernel_Mafia_Technical_Report.pdf)
+* Technical Report: [docs/HAN_Lab_Kernel_Mafia_Technical_Report](docs/HAN_Lab_Kernel_Mafia_Technical_Report.pdf)
 * Generated Kernels / Final solution: [mit-han-lab/mlsys2026-flashinfer-contest-solution](https://github.com/mit-han-lab/mlsys2026-flashinfer-contest-solution)
 
 ![HAN Lab Kernel Mafia teaser](docs/assets/hanlab-kernel-mafia-teaser.png)
@@ -121,6 +121,6 @@ Install `humanize` separately from Claude Plugin Marketplace
 
 ## Release Boundary
 
-Final kernels are stored only in [https://github.com/mit-han-lab/mlsys2026-flashinfer-contest-solution.git](https://github.com/mit-han-lab/mlsys2026-flashinfer-contest-solution.git) as result snapshots. This link is for release provenance and final-result verification; it is not an input to the prompt-driven agent workflow. Agents MUST NOT clone or inspect the release repository while solving the tasks. Intermediate candidates, benchmark histories, and search DAGs are not part of this release. The prompts in `prompts/` are meant to be run from a separate task implementation workspace created from the official FlashInfer starter kit. We do not place final kernels inside an agent starting workspace.
+Final kernels are stored only in [mit-han-lab/mlsys2026-flashinfer-contest-solution.git](https://github.com/mit-han-lab/mlsys2026-flashinfer-contest-solution.git) as result snapshots. This link is for release provenance and final-result verification; it is not an input to the prompt-driven agent workflow. Agents MUST NOT clone or inspect the release repository while solving the tasks. Intermediate candidates, benchmark histories, and search DAGs are not part of this release. The prompts in `prompts/` are meant to be run from a separate task implementation workspace created from the official FlashInfer starter kit. We do not place final kernels inside an agent starting workspace.
 
 Running the full Agents workflow is not bitwise deterministic: search order, profiling noise, GPU scheduling, and model behavior can change. The external submissions repository is the source of truth for the released final kernel snapshots.
