@@ -4,7 +4,7 @@ This repository releases the prompts, workflow documentation, and a minimal veri
 
 * Team: HAN Lab Kernel Mafia
 * Technical report: [docs/HAN_Lab_Kernel_Mafia_Technical_Report](docs/HAN_Lab_Kernel_Mafia_Technical_Report.pdf)
-* Generated Kernels: [mit-han-lab/mlsys2026-flashinfer-contest-solution](https://github.com/mit-han-lab/mlsys2026-flashinfer-contest-solution)
+* Generated Kernels / Final solution: [mit-han-lab/mlsys2026-flashinfer-contest-solution](https://github.com/mit-han-lab/mlsys2026-flashinfer-contest-solution)
 
 ![HAN Lab Kernel Mafia teaser](docs/assets/hanlab-kernel-mafia-teaser.png)
 
