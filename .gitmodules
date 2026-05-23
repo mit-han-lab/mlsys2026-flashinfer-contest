@@ -1,0 +1,6 @@
+[submodule "skills/KernelWiki"]
+	path = skills/KernelWiki
+	url = https://github.com/DongyunZou/KernelWiki.git
+[submodule "skills/ncu-report-skill"]
+	path = skills/ncu-report-skill
+	url = https://github.com/DongyunZou/ncu-report-skill.git

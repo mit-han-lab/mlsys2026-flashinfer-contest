@@ -1,0 +1,25 @@
+[project]
+name = "hanlab-kernel-mafia"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "flashinfer-bench>=0.1.2",
+    "flashinfer-python==0.6.8.post1",
+    "huggingface-hub>=1.0.0",
+    "ninja>=1.13.0",
+    "omegaconf>=2.3.0",
+    "torch>=2.12.0",
+]
+
+[tool.uv]
+index-strategy = "unsafe-best-match"
+override-dependencies = ["triton==3.6.0"]
+
+[[tool.uv.index]]
+name = "pytorch-test-cu132"
+url = "https://download.pytorch.org/whl/test/cu132"
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-test-cu132" }]
+flashinfer-bench = { path = "/tmp/flashinfer-bench-main", editable = true }

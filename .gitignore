@@ -1,0 +1,17 @@
+data/
+outputs/
+runs/
+profile/
+*.ncu-rep
+*.nsys-rep
+*.sqlite
+__pycache__/
+*.py[cod]
+.venv/
+.cache/
+build/
+dist/
+*.egg-info/
+solution.json
+
+.DS_Store

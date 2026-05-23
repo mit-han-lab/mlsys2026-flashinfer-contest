@@ -1,0 +1,84 @@
+# DSA Sparse Attention Phase 1 Prompt
+
+Develop a kernel that minimizes latency while preserving numerical correctness. The target machine is NVIDIA B200, and the software environment is CUDA 13.2. This task does not restrict the implementation language: CUDA C++, CuTe DSL, Triton, Python-wrapped CUDA extensions, or any other contest-allowed approach may be used.
+
+## Kernel Information
+
+- Definition name: `dsa_sparse_attention_h16_ckv512_kpe64_topk2048_ps64`
+- Baseline solution name: `flashinfer_wrapper_5af199`
+- Operation type: `dsa_paged`
+- Workload count: 23
+- Constant axes:
+  - `num_qo_heads = 16`
+  - `head_dim_ckv = 512`
+  - `head_dim_kpe = 64`
+  - `page_size = 64`
+  - `topk = 2048`
+- Variable axes:
+  - `num_tokens`
+  - `num_pages`
+
+The kernel receives query tensors `q_nope` and `q_pe`, compressed KV cache tensors `ckv_cache` and `kpe_cache`, sparse top-k indices, and a scalar softmax scale. It must return:
+
+- `output` with shape `[num_tokens, 16, 512]` and dtype `bfloat16`
+- `lse` with shape `[num_tokens, 16]` and dtype `float32`
+
+The reference computation is:
+
+1. Flatten the paged KV cache from `[num_pages, 64, dim]` to token-level storage.
+2. For each token, use `sparse_indices[t]` to gather up to 2048 valid KV tokens; `-1` indicates padding.
+3. Compute logits as `(q_nope @ ckv.T) + (q_pe @ kpe.T)` for 16 query/output heads.
+4. Apply `sm_scale`.
+5. Compute 2-based log-sum-exp for `lse`.
+6. Compute softmax attention and multiply by `ckv` to produce `output`.
+
+## Official Acceptance
+
+The solution must pass the official FlashInfer benchmark correctness checks for `dsa_sparse_attention_h16_ckv512_kpe64_topk2048_ps64`. Use the official FlashInfer benchmark/starter-kit evaluator and consult the FAQ when dependency or rule questions are unclear:
+
+```text
+https://github.com/flashinfer-ai/flashinfer-bench-starter-kit/blob/main/FAQ.md
+```
+
+When working in this release repository, a full validation run can be launched with:
+
+```bash
+uv run python verify.py --solution /path/to/solution.json --fast
+```
+
+During development, use eight representative workloads before running all 23 workloads:
+
+| UUID | num_tokens | num_pages |
+|---|---:|---:|
+| `0c23b10c7b7645719517828c12eaa1d2` | 1 | 8462 |
+| `9d4a5f21268e484ea05a2f2af91d9fa7` | 2 | 8462 |
+| `b7668cfd194c4b95ab600feb205ebac6` | 2 | 8462 |
+| `ddfa9e340b264f76abe7418692faa876` | 6 | 8462 |
+| `3838996164a94d728710f913477feba8` | 7 | 8462 |
+| `385742b2717e4f02b918c7349dde23d8` | 8 | 8462 |
+| `4c46a94ba2364dc7ab476286dee8dce3` | 8 | 8462 |
+| `02d6ae9c64ab42ff93f05c23c53bcb7d` | 8 | 8462 |
+
+After any major performance improvement, run the full 23-workload evaluation.
+
+## Workflow Requirements
+
+- Record every performance-related commit in `benchmark.csv`.
+- Record every candidate in `solutions.jsonl` and maintain parent links as a DAG.
+- Keep NCU profiling records for each major optimization direction.
+- Actively evaluate and use as many relevant B200 and CUDA 13.2 features as possible, including TMA, TMEM, `tcgen05`, warp specialization, persistent scheduling, wide vectorized memory operations, and coalesced memory access when they fit the kernel.
+- Use KernelWiki for research on Blackwell/B200, CUDA 13.2, CuTe DSL, Triton, sparse attention, MLA/DSA, paged KV cache access, BF16 attention, softmax/LSE, TMA, TMEM, and `tcgen05`.
+- Use ncu-report-skill when profiling or interpreting Nsight Compute reports.
+- Do not copy final released submission code into the starting workspace.
+
+## Phase 1 Goal
+
+Research existing sparse attention and MLA/DSA implementations and produce the first correct B200 implementation. Focus on understanding the sparse index format, paged-cache memory layout, numerical requirements for softmax and 2-based LSE, and a simple correct implementation strategy. Performance matters, but correctness and a clean baseline design are the priority for this phase.
+
+Before implementing, write an implementation-plan draft and save it to:
+
+```text
+docs/draft.md
+```
+
+Prepare to run `/humanize:gen-plan` on that draft to generate the detailed implementation plan.
