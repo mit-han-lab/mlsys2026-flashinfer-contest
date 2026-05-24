@@ -44,6 +44,33 @@ This ablation was run after the competition, separately from the official contes
 | `docs/HAN_Lab_Kernel_Mafia_Technical_Report.pdf` | Technical report. |
 | `docs/reproduction.md` | Environment, dataset, and benchmark reproduction notes. |
 
+## Agent Workflow Dependencies
+
+The workflow depends on Claude Code and Codex. Install `humanize` as a Claude Code plugin, and install `KernelWiki` and `ncu-report-skill` as Claude skills under `~/.claude/skills/`.
+
+This repository links the two required skills as git submodules under `skills/` so they are visible in the release tree. If you did not clone with `--recurse-submodules`, initialize them from the repository root:
+
+```bash
+# link skills
+git submodule update --init --recursive
+mkdir -p ~/.claude/skills
+ln -sfn "$PWD/skills/KernelWiki" ~/.claude/skills/KernelWiki
+ln -sfn "$PWD/skills/ncu-report-skill" ~/.claude/skills/ncu-report-skill
+
+# or clone skills directly
+mkdir -p ~/.claude/skills && cd ~/.claude/skills
+git clone https://github.com/mit-han-lab/ncu-report-skill.git
+git clone https://github.com/mit-han-lab/KernelWiki.git
+```
+
+Install `humanize` separately from Claude Plugin Marketplace
+```bash
+# Add PolyArch marketplace
+/plugin marketplace add PolyArch/humanize
+# Then install humanize plugin
+/plugin install humanize@PolyArch
+```
+
 ## Fresh Workflow Setup
 
 Clone this repository, install the benchmark environment, download the FlashInfer contest workloads, and prepare the agent workflow dependencies:
@@ -89,34 +116,6 @@ By default, the dataset is stored under `data/flashinfer-trace` inside this repo
 
 ```bash
 export FIB_DATASET_PATH=/path/to/flashinfer-trace
-```
-
-## Agent Workflow Dependencies
-
-The workflow depends on Claude Code and Codex. Install `humanize` as a Claude Code plugin, and install `KernelWiki` and `ncu-report-skill` as Claude skills under `~/.claude/skills/`.
-
-This repository links the two required skills as git submodules under `skills/` so they are visible in the release tree. If you did not clone with `--recurse-submodules`, initialize them from the repository root:
-
-```bash
-git submodule update --init --recursive
-
-# link skills
-mkdir -p ~/.claude/skills
-ln -sfn "$PWD/skills/KernelWiki" ~/.claude/skills/KernelWiki
-ln -sfn "$PWD/skills/ncu-report-skill" ~/.claude/skills/ncu-report-skill
-
-# or clone skills directly
-# mkdir -p ~/.claude/skills && cd ~/.claude/skills
-# git clone https://github.com/DongyunZou/ncu-report-skill.git
-# git clone https://github.com/DongyunZou/KernelWiki.git
-```
-
-Install `humanize` separately from Claude Plugin Marketplace
-```bash
-# Add PolyArch marketplace
-/plugin marketplace add PolyArch/humanize
-# Then install humanize plugin
-/plugin install humanize@PolyArch
 ```
 
 ## Release Boundary
