@@ -49,7 +49,14 @@ Do not let `uv` upgrade `flashinfer-python` or Triton when reproducing contest-e
 `deep_gemm` is required by some baselines and by generated solutions that use CUTLASS/CuTe headers. Install it after `uv sync` because the build depends on the active PyTorch environment:
 
 ```bash
-git clone https://github.com/deepseek-ai/DeepGEMM.git /tmp/DeepGEMM
+git clone --recursive https://github.com/deepseek-ai/DeepGEMM.git /tmp/DeepGEMM
+uv pip install -e /tmp/DeepGEMM --no-build-isolation
+```
+
+If `/tmp/DeepGEMM` already exists from a non-recursive clone, initialize the missing submodules before installing:
+
+```bash
+git -C /tmp/DeepGEMM submodule update --init --recursive
 uv pip install -e /tmp/DeepGEMM --no-build-isolation
 ```
 

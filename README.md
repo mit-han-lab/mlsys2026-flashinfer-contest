@@ -87,7 +87,10 @@ uv sync --python 3.12
 # Use Python 3.12 or 3.13; Python 3.14 is not supported by all CUDA wheels.
 
 # Required by some baselines and generated solutions that use DeepGEMM/CUTLASS/CuTe headers.
-git clone https://github.com/deepseek-ai/DeepGEMM.git /tmp/DeepGEMM
+# DeepGEMM needs its CUTLASS/fmt submodules during installation.
+git clone --recursive https://github.com/deepseek-ai/DeepGEMM.git /tmp/DeepGEMM
+# If /tmp/DeepGEMM already exists from a non-recursive clone:
+# git -C /tmp/DeepGEMM submodule update --init --recursive
 uv pip install -e /tmp/DeepGEMM --no-build-isolation
 
 uv run ./scripts/download_data.sh
